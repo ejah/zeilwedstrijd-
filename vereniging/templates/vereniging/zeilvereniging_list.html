@@ -1,0 +1,8 @@
+{% extends "site_base.html" %}
+{%  block content %}
+<ul>
+    {% for zv in object_list %}
+    <ul>{{ zv.naam }}</ul>
+    {% endfor %}
+</ul>
+{%  endblock %}
