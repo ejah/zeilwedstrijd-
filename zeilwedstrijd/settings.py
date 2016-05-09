@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vereniging.apps.VerenigingConfig',
+    'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
-    'schedule',
+    # 'schedule',
 ]
 
 MIDDLEWARE_CLASSES = [
