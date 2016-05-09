@@ -17,12 +17,11 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from vereniging.urls import v_urls
 from wedstrijdagenda import views
-from schedule import urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^verenigingen/', include(v_urls)),
     url(r'^$', views.homepage, name="home"),
-    url(r'^', include(urls.urlpatterns)),
-
+    # url(r'^schedule/', include('schedule.urls')),
+    url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
 ]
