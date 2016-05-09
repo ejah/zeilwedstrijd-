@@ -50,15 +50,16 @@ class Gebruiker(models.Model):
     # Todo: Details als telefoon, email etc voegen we later toe
 
     USER_TYPES = [
-        ("0", "Normaal"),
-        ("1", "Vereniging"),
+        (0, "Normaal"),
+        (1, "Vereniging"),
     ]
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
-    usertype = models.IntegerField(null=True, choices=USER_TYPES)
+    usertype = models.IntegerField(default=0, choices=USER_TYPES)
     adres = models.ForeignKey(Adres, null=True)
     vereniging = models.ForeignKey(ZeilVereniging, null=True)
 
     def __str__(self):
         typename = [x[1] for x in self.USER_TYPES if x[0] == self.usertype].pop()
-        return "{}: {}: {}".format(self.user.name, self.vereniging.naam, typename)
+        return "{}: {}: {}".format(self.user.last_name, self.vereniging.naam, typename)
+

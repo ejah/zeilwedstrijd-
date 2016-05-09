@@ -2,12 +2,33 @@
 {% load staticfiles %}
 {% block extra_head %}
     <link rel='stylesheet' type='text/css'
-          href="{% static "fullcalendar/dist/fullcalendar.css" %}"/>
+          href="{% static "fullcalendar/dist/fullcalendar.css" %}" xmlns="http://www.w3.org/1999/html"/>
     <script type="text/javascript" src="{% static "moment/min/moment.min.js" %}"></script>
     <script type='text/javascript'
             src="{% static "fullcalendar/dist/fullcalendar.js" %}"></script>
     <script type='text/javascript' src="{% static "fullcalendar/dist/lang/nl.js" %}"></script>
 
+{% endblock %}
+
+{% block sidebar %}
+    <div>
+        {% if user.is_authenticated %}
+            {% if user.gebruiker.usertype == 1 %}
+                <h1>Menu</h1>
+            {% endif %}
+            <p>hoi</p>
+        {% endif %}
+    </div>
+    <div>
+    <h1>Filter</h1>
+        <h2>Type wedstrijd</h2>
+        <h2>Handicap</h2>
+    <form>
+        <input id="SW" type="checkbox" value="SW" onselect="function () {
+          
+        }"><label for="SW">SW</label>
+    </form>
+    </div>
 {% endblock %}
 
 {% block body %}
@@ -21,10 +42,10 @@
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
-                title: "Dit is een titel",
+                title: 'Dit is een titel',
                 header: {
-                    left: 'prevYear nextYear',
-                    center: 'month basicWeek basicDay agendaWeek agendaDay',
+                    left: 'month basicWeek basicDay',
+                    center: 'title',
                     right: 'today prev next'
                 },
                 weekNumbers: true,

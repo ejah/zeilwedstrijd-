@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+
 from vereniging.urls import v_urls
 from wedstrijdagenda import views
+from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +26,8 @@ urlpatterns = [
     url(r'^$', views.homepage, name="home"),
     # url(r'^schedule/', include('schedule.urls')),
     url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
+    url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/$', WedstrijdDetailView.as_view(), name="zeilwedstrijd"),
+    url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/inschrijven', inschrijven, name="inschrijven"),
+    url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/uitschrijven', uitschrijven, name="uitschrijven"),
+
 ]

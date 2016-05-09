@@ -1,0 +1,71 @@
+{% extends "site_base.html" %}
+{% block body %}
+    <div class="col-md-8">
+
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <td colspan="2">
+                    <h1>{{ object.titel }}</h1>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+                <th>
+                    Start
+                </th>
+                <td>{{ object.start }}</td>
+            </tr>
+            <tr>
+                <th>
+                    Eind
+                </th>
+                <td>{{ object.eind }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ object.beschrijving }}
+                </td>
+            </tr>
+        </table>
+
+        {% if not user in object.deelnemers.all %}
+            <form action="{% url "inschrijven" object.slug %}" method="get">
+                <button class="btn btn-default" value="Inschrijven" type="submit">Inschrijven</button>
+            </form>
+        {% else %}
+            <form action="{% url "uitschrijven" object.slug %}" method="get">
+                <button class="btn btn-default" value="Uitschrijven" type="submit">Uitschrijven</button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td colspan="3">
+                    <h1>
+                        Deelnemers
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>Schipper</td>
+                <td>Schip</td>
+            </tr>
+            </thead>
+            {% for deelnemer in object.deelnemers.all %}
+                <tr>
+                    <td> {{ forloop.counter }}</td>
+
+                    <td>
+                        {{ deelnemer.last_name }}
+                    </td>
+                    <td>Scheepsnaam</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+{% endblock %}

@@ -1,6 +1,8 @@
-from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 import datetime
+from django.conf import settings
 
 # Create your models here.
 from django.template.defaultfilters import slugify
@@ -15,6 +17,7 @@ class Wedstrijd(models.Model):
     beschrijving = models.TextField(verbose_name="Beschrijving", blank=False)
     titel = models.CharField(max_length=150)
     slug = models.SlugField()
+    deelnemers = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.titel
@@ -24,4 +27,5 @@ class Wedstrijd(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("zeilwedstrijd", kwargs={"slug": self.slug})
+        return reverse_lazy("zeilwedstrijd", kwargs={"slug": self.slug})
+        # return "zeilwedstrijd/%s" % (self.slug)
