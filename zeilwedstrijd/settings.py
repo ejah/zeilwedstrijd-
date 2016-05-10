@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'vereniging.apps.VerenigingConfig',
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
+    'user',
     # 'schedule',
 ]
 

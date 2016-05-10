@@ -1,0 +1,12 @@
+{% extends parent_template|default:"user/base_user.html" %}
+
+{% block head_title %}
+{{ block.super }} - Inloggen
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-4">
+    {% include "user/login_form.html" %}
+    {% include "user/password_forgotten.html" %}
+    </div>
+{% endblock %}

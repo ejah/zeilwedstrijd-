@@ -1,0 +1,11 @@
+{% extends parent_tamplate|default:"user/base_user.html" %}
+
+{% block head_title %}
+{{ block.super }} - U bent uitgelogd
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-4">
+    {% include "user/login_form.html" with login_button='Opnieuw inloggen' %}
+    </div>
+{% endblock %}
