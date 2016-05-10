@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'bootstrapform',
     'vereniging.apps.VerenigingConfig',
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'nl-NL'
 
 TIME_ZONE = 'UTC'
 
@@ -139,5 +140,8 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
 BOWER_INSTALLED_APPS = (
     'jquery',
     'bootstrap',
-    'fullcalendar'
+    'fullcalendar',
+    'eonasdan-bootstrap-datetimepicker'
 )
+
+LOGIN_URL = "login"

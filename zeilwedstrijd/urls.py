@@ -15,17 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 from vereniging.urls import v_urls
 from wedstrijdagenda import views
-from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven
+from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven, WedstrijdCreateView
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^verenigingen/', include(v_urls)),
     url(r'^$', views.homepage, name="home"),
     # url(r'^schedule/', include('schedule.urls')),
+    url(r'^accounts/login/$', auth_views.login, name="login"),
+    url(r'^accounts/logout/$', auth_views.logout, name="logout"),
     url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
+    url(r'^zeilwedstrijd/nieuw/$', WedstrijdCreateView.as_view(), name="nieuwe_wedstrijd"),
     url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/$', WedstrijdDetailView.as_view(), name="zeilwedstrijd"),
     url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/inschrijven', inschrijven, name="inschrijven"),
     url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/uitschrijven', uitschrijven, name="uitschrijven"),

@@ -10,21 +10,34 @@ class Adres(models.Model):
     woonplaats = models.CharField(max_length=50, blank=False)
     straatnaam = models.CharField(max_length=50, blank=True)
     huisnummer = models.CharField(max_length=10, blank=True)
-    postbus = models.BooleanField(default=False)
-    postbusnummer = models.CharField(max_length=10, blank=True)
     postcode = models.CharField(max_length=7, blank=False)
     land = models.CharField(max_length=20, blank=True)
+    is_standaard = models.BooleanField(default=True)
+
+    def __str__(self):
+        return "%s %s" % (self.woonplaats, self.postcode)
+
+    class Meta:
+        abstract=True
+        verbose_name_plural="Adressen"
+        verbose_name="Adres"
+
+class VerenigingsAdres(Adres):
+    vereniging = models.ForeignKey("ZeilVereniging")
+
+class GebruikersAdres(Adres):
+    gebruiker = models.ForeignKey("Gebruiker")
 
 
 class ZeilVereniging(models.Model):
     naam = models.CharField(max_length=50, unique=True)
-    bezoekadres = models.ForeignKey(Adres, verbose_name="Bezoek adres", related_name="bezoekadres", null=True, blank=True)
-    postadres = models.ForeignKey(Adres, verbose_name='Post adres', related_name="postadres", null=True, blank=True)
+    # bezoekadres = models.ForeignKey(Adres, verbose_name="Bezoek adres", related_name="bezoekadres", null=True, blank=True)
+    # postadres = models.ForeignKey(Adres, verbose_name='Post adres', related_name="postadres", null=True, blank=True)
     slug = models.SlugField(default="", blank=True)
     # ToDo: Details van de vereniging toevoegen aan het model
 
     def __str__(self):
-        return "{}: {}:".format(self.naam, self.bezoekadres or "")
+        return "{}".format(self.naam)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.naam)
@@ -56,10 +69,8 @@ class Gebruiker(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
     usertype = models.IntegerField(default=0, choices=USER_TYPES)
-    adres = models.ForeignKey(Adres, null=True)
     vereniging = models.ForeignKey(ZeilVereniging, null=True)
 
     def __str__(self):
-        typename = [x[1] for x in self.USER_TYPES if x[0] == self.usertype].pop()
-        return "{}: {}: {}".format(self.user.last_name, self.vereniging.naam, typename)
+        return " ".format(self.user.last_name, self.user.first_name)
 

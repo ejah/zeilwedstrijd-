@@ -29,3 +29,6 @@ class Wedstrijd(models.Model):
     def get_absolute_url(self):
         return reverse_lazy("zeilwedstrijd", kwargs={"slug": self.slug})
         # return "zeilwedstrijd/%s" % (self.slug)
+
+    class Meta:
+        verbose_name_plural = "Wedstrijden"

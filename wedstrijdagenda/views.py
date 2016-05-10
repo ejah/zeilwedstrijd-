@@ -3,15 +3,16 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 from django.template import RequestContext
-from django.views.generic import DetailView
+from django.views.generic import DetailView, CreateView
 from schedule.models import Calendar, Event
 from datetime import datetime
 
+from wedstrijdagenda.forms import CreateWedstrijdForm
 from wedstrijdagenda.models import Wedstrijd
-
 
 
 def homepage(request):
@@ -34,15 +35,16 @@ def api_wedstrijden(request):
              "end": wedstrijd.eind.isoformat(),
              "title": wedstrijd.titel,
              "beschrijving": wedstrijd.beschrijving,
-             "url": "zeilwedstrijd/%s/" % (wedstrijd.slug),
+             "url": "zeilwedstrijd/%s/" % wedstrijd.slug,
              })
     return HttpResponse(json.dumps(ws_lijst), content_type="application/json")
+
 
 @login_required
 def inschrijven(request, slug):
     wedstrijd = get_object_or_404(Wedstrijd, slug=slug)
     cu = request.user
-    if not wedstrijd.deelnemers.all().filter(pk=cu.pk).exists():
+    if not cu in wedstrijd.deelnemers.filter(pk=cu.pk):
         wedstrijd.deelnemers.add(cu)
     return redirect(wedstrijd)
 
@@ -51,13 +53,19 @@ def inschrijven(request, slug):
 def uitschrijven(request, slug):
     wedstrijd = get_object_or_404(Wedstrijd, slug=slug)
     cu = request.user
-    dn = wedstrijd.deelnemers.all().filter(pk=cu.pk)
-    if dn.exists():
-        dn.delete()
+    if cu in wedstrijd.deelnemers.filter(pk=cu.pk):
+        wedstrijd.deelnemers.remove(cu)
     return redirect(wedstrijd)
 
 
 class WedstrijdDetailView(DetailView):
     model = Wedstrijd
     slug_field = "slug"
+
+
+class WedstrijdCreateView(CreateView):
+    model = Wedstrijd
+    # fields = ["start", "eind", "titel", "beschrijving", "vereniging"]
+    success_url = "/"
+    form_class = CreateWedstrijdForm
 
