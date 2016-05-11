@@ -8,5 +8,6 @@
     <div class="col-md-4">
     {% include "user/login_form.html" %}
     {% include "user/password_forgotten.html" %}
+    <a href="{% url 'ej-user:create' %}">Een nieuw account aanmaken</a>
     </div>
 {% endblock %}

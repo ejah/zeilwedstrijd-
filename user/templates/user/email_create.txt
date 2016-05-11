@@ -1,0 +1,12 @@
+Beste nieuwe gebruiker,
+
+We hebben een verzoek gekregen om een account aan te maken voor dit email adres.
+
+Als u geen account heeft aangevraagd kunt u dit bericht negeren.
+Om uw account te activeren kunt u op onderstaande link klikken.
+
+{{ protocol }}://{{ domain }}{% url 'dj-auth:activate' uid token %}
+
+Met vriendelijke groet,
+
+Het {{ site_name }} team
