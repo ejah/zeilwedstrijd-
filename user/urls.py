@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
+from .views import DisableAccount
 
 password_urls = [
     url(r'^wijzigen/$', auth_views.password_change,
@@ -37,5 +38,6 @@ urlpatterns = [
                                           "extra_context": {"form": AuthenticationForm}},
         name="logout"),
     url(r'^password/', include(password_urls)),
+    url(r'^disable/$', DisableAccount.as_view(), name='disable'),
 
 ]
