@@ -150,6 +150,7 @@ BOWER_INSTALLED_APPS = (
 LOGIN_URL = reverse_lazy("ej-user:login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGOUT_URL = reverse_lazy("ej-user:logout")
+PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SERVER_EMAIL = 'info@zeilwedstrijden.nl'

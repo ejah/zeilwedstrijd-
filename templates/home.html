@@ -24,9 +24,7 @@
         <h2>Type wedstrijd</h2>
         <h2>Handicap</h2>
     <form>
-        <input id="SW" type="checkbox" value="SW" onselect="function () {
-          
-        }"><label for="SW">SW</label>
+        <input id="SW" type="checkbox" value="SW" onchange="update_filter(this)"><label for="SW">SW</label>
     </form>
     </div>
 {% endblock %}
@@ -54,5 +52,6 @@
 
         });
     </script>
+    <script type='text/javascript' src="/static/wedstrijdagenda/js/main_zws.js"></script>
 
 {% endblock %}

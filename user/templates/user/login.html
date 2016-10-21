@@ -1,13 +1,19 @@
 {% extends parent_template|default:"user/base_user.html" %}
 
 {% block head_title %}
-{{ block.super }} - Inloggen
+    {{ block.super }} - Inloggen
 {% endblock %}
 
 {% block body %}
-    <div class="col-md-4">
-    {% include "user/login_form.html" %}
-    {% include "user/password_forgotten.html" %}
-    <a href="{% url 'ej-user:create' %}">Een nieuw account aanmaken</a>
+    <div class="col-md-6">
+        <div class="row">
+            {% include "user/login_form.html" %}</div>
+        <div class="row">
+            <ul class="list-inline" style="padding-top: 20px">
+                <li><a href="{% url "ej-user:pw_reset_start" %}">Wachtwoord resetten</a></li>
+                <li> |</li>
+                <li><a href="{% url 'ej-user:create' %}">Een nieuw account aanmaken</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}

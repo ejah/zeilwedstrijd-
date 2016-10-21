@@ -14,8 +14,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class ActivationMailFormMixin:
     mail_validation_error = ''
+
+    def __init__(self):
+        self._mail_sent = None
 
     @property
     def mail_sent(self):
@@ -50,7 +54,7 @@ class ActivationMailFormMixin:
         token = token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         context.update({
-            'domain':current_site.domain,
+            'domain': current_site.domain,
             'protocol': protocol,
             'site_name': current_site.name,
             'token': token,
@@ -63,7 +67,7 @@ class ActivationMailFormMixin:
         kwargs['context'] = self.get_context_data(request, user)
         mail_kwargs = {
             "subject": self.get_subject(**kwargs),
-            "message":self.get_message(**kwargs),
+            "message": self.get_message(**kwargs),
             "from_email": settings.DEFAULT_FROM_EMAIL,
             "recipient_list": [user.email],
         }
@@ -77,12 +81,12 @@ class ActivationMailFormMixin:
                 err_code = 'smtperror'
             else:
                 err_code = 'unexpectederror'
-            return (False, err_code)
+            return False, err_code
         else:
             if number_sent > 0:
-                return (True, None)
+                return True, None
             self.log_mail_error(**mail_kwargs)
-            return (False, 'unknownerror')
+            return False, 'unknownerror'
 
     def send_mail(self, user, **kwargs):
         request = kwargs.pop('request', None)
@@ -95,11 +99,10 @@ class ActivationMailFormMixin:
             )
             self._mail_sent = False
             return self.mail_sent
-        self._mail_sent, error = (
-            self._send_mail(request, user, **kwargs))
+        self._mail_sent, error = self._send_mail(request, user, **kwargs)
         if not self.mail_sent:
-            self.add_error(
-                None, # geen field maar een form error
+            self.add_error(     # verwijst naar Forms.add_error, de benodigde andere class voor deze mixin
+                None,  # geen field maar een form error
                 ValidationError(
                     self.mail_validation_error,
                     code=error))
@@ -124,7 +127,7 @@ class ActivationMailFormMixin:
             error_info = error_msg.format(kwargs['error'])
             msg_list.insert(1, error_info)
         else:
-            level= logging.CRITICAL
+            level = logging.CRITICAL
         msg = ''.join(msg_list).format(**kwargs)
         logger.log(level, msg)
 
@@ -139,7 +142,3 @@ class MailContextViewMixin:
             'subject_template_name': self.subject_template_name,
             'request': request,
         }
-
-
-
-

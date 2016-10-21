@@ -14,9 +14,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import View
 
-from .forms import UserCreationForm
+from .forms import UserCreationForm, ResendActivationEmailForm
 from .utils import MailContextViewMixin
-
 
 # Create your views here.
 class DisableAccount(View):
@@ -60,6 +59,7 @@ class CreateAccount(MailContextViewMixin, View):
                 errs = (bound_form.non_field_errors())
                 for err in errs:
                     error(request, err)
+                return redirect("ej-user:resend_activation")
         return TemplateResponse(request, self.template_name, {'form': bound_form})
 
 
@@ -79,8 +79,32 @@ class ActivateAccount(View):
             user.is_active = True
             user.save()
             success(request,
-                    'Gebruiker is nu actief.',
+                    'Uw account is nu actief.',
                     'U kunt nu inloggen.')
             return redirect(self.success_url)
         else:
             return TemplateResponse(request, self.template_name)
+
+class ResendActivationEmail(MailContextViewMixin, View):
+    form_class = ResendActivationEmailForm
+    succes_url = reverse_lazy("ej-user:login")
+    template_name = 'user/resend_activation.html'
+
+    @method_decorator(csrf_protect)
+    def get(self, request):
+        return TemplateResponse(request, self.template_name, {'form': self.form_class})
+
+    @method_decorator(csrf_protect)
+    def post(self, request):
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            user = bound_form.save(**self.get_save_kwargs(request))
+            if (user is not None and not bound_form.email_sent):
+                errs = (bound_form.non_field_errors())
+                for err in errs:
+                    error(request, err)
+                if errs:
+                    bound_form.errors.pop('__all__')
+                return TemplateResponse(request, self.template_name, {'form':bound_form})
+        success(request, 'Activeringsemail is verstuurd.')
+        return redirect(self.succes_url)

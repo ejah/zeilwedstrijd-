@@ -18,7 +18,8 @@ from django.contrib import admin
 
 from vereniging.urls import v_urls
 from wedstrijdagenda import views
-from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven, WedstrijdCreateView
+from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven, WedstrijdCreateView, \
+    api_filter_wedstrijden
 from user import urls as user_urls
 
 
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^user/', include(user_urls, app_name='user', namespace='ej-user')),
 
     url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
+    url(r'^api/filter', api_filter_wedstrijden, name="filter_wedstrijden"),
 
     url(r'^zeilwedstrijd/nieuw/$', WedstrijdCreateView.as_view(), name="nieuwe_wedstrijd"),
     url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/$', WedstrijdDetailView.as_view(), name="zeilwedstrijd"),

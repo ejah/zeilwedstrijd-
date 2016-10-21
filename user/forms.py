@@ -2,6 +2,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from .utils import ActivationMailFormMixin
+import logging
+from django import forms
+
+logger = logging.getLogger(__name__)
 
 
 class UserCreationForm(ActivationMailFormMixin, BaseUserCreationForm):
@@ -26,3 +30,18 @@ class UserCreationForm(ActivationMailFormMixin, BaseUserCreationForm):
             self.send_mail(user=user, **kwargs)
         return user
 
+class ResendActivationEmailForm(ActivationMailFormMixin, forms.Form):
+
+    email = forms.EmailField()
+    mail_validation_error = "Helaas kan de activeringsemail niet opnieuw worden verstuurd. "\
+        "Probeer het op een later moment nog eens. Onze excuses."
+
+    def save(self, **kwargs):
+        User = get_user_model()
+        try:
+            user = User.objects.get(email=self.cleaned_data(['email']))
+        except:
+            logger.warning('Resend activation: geen gebruiker met email {}.'.format(self.cleaned_data(['email'])))
+            return None
+        self.send_mail(user=user, **kwargs)
+        return user

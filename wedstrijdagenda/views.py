@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
@@ -14,7 +15,7 @@ from datetime import datetime
 from wedstrijdagenda.forms import CreateWedstrijdForm
 from wedstrijdagenda.models import Wedstrijd
 
-
+@ensure_csrf_cookie
 def homepage(request):
     # cal, created = Calendar.objects.get_or_create(name="Zeil wedstrijden", slug="zeil-wedstrijden")
     # if created:
@@ -39,6 +40,15 @@ def api_wedstrijden(request):
              })
     return HttpResponse(json.dumps(ws_lijst), content_type="application/json")
 
+def api_filter_wedstrijden(request):
+    # Browser stuurt een JSON dict met alle filters als key - value pairs
+
+    if request.method == 'POST':
+        filter = request.POST.get("filter");
+        filter_name, filter_value = filter
+
+
+# todo: afmaken van de Ajax communicatie.
 
 @login_required
 def inschrijven(request, slug):
