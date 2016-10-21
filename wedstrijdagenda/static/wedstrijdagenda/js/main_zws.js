@@ -32,13 +32,13 @@ $.ajaxSetup({
 
 function update_filter(checkBox){
     var cb_id = checkBox.id;
-    var filter = { cb_id: checkBox.checked };
+    var cb_val = checkBox.checked;
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: "api/filter",
         type: 'POST',
-        data: {'csrf':csrf_token,
-                'filter':filter},
+        data: {'filter_id':cb_id,
+               'filter_val':cb_val },
 
         success: function(json) {
             console.log("Filter values gepost");

@@ -15,6 +15,8 @@ from datetime import datetime
 from wedstrijdagenda.forms import CreateWedstrijdForm
 from wedstrijdagenda.models import Wedstrijd
 
+actief_filter = {}
+
 @ensure_csrf_cookie
 def homepage(request):
     # cal, created = Calendar.objects.get_or_create(name="Zeil wedstrijden", slug="zeil-wedstrijden")
@@ -44,8 +46,16 @@ def api_filter_wedstrijden(request):
     # Browser stuurt een JSON dict met alle filters als key - value pairs
 
     if request.method == 'POST':
-        filter = request.POST.get("filter");
-        filter_name, filter_value = filter
+        filter_id = request.POST.get("filter_id");
+        filter_val = request.POST.get("filter_val") in ['true', 'True', 'T', '1'];
+        if request.user.is_authenticated():
+            # todo: if the user is authenticated, store the filter data in it's profile
+            # en update het actieve filter
+            actief_filter[filter_id] = filter_val
+        else:
+            actief_filter[filter_id] = filter_val
+
+    return HttpResponse('ok')
 
 
 # todo: afmaken van de Ajax communicatie.
