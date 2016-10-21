@@ -9,6 +9,10 @@ from django.template.defaultfilters import slugify
 
 from vereniging.models import ZeilVereniging
 
+class WedstrijdType(models.Model):
+    pass
+# todo: type wedstrijden waarop we willen filteren invullen
+
 
 class Wedstrijd(models.Model):
     start = models.DateTimeField(verbose_name="Start", blank=False)
