@@ -10,9 +10,26 @@ from django.template.defaultfilters import slugify
 from vereniging.models import ZeilVereniging
 
 class WedstrijdType(models.Model):
-    pass
-# todo: type wedstrijden waarop we willen filteren invullen
+    klasse = models.BooleanField(verbose_name="Eenheidsklasse", default=False)
+    handicap = models.BooleanField(verbose_name="Open op handicap", default=False)
+    jeugd = models.BooleanField(verbose_name="Jeugdwedstrijd", default=False)
+    single_handed = models.BooleanField(verbose_name="Single handed", default=False)
+    dual_handed = models.BooleanField(verbose_name="Dual handed", default=False)
+    inshore = models.BooleanField(verbose_name="Inshore", default=False)
+    nearshore = models.BooleanField(verbose_name="Near shore", default=False)
+    offshore = models.BooleanField(verbose_name="Offshore", default=False)
 
+    def __str__(self):
+        name_list = [];
+        fieldlist = self._meta.get_fields()
+        for field in fieldlist:
+            if field.get_internal_type() in ["BooleanField"]:
+                if getattr(self, field.name):
+                    name_list.append(field.verbose_name)
+        return " ".join(name_list)
+
+    class Meta:
+        verbose_name_plural = "Wedstrijdtypen"
 
 class Wedstrijd(models.Model):
     start = models.DateTimeField(verbose_name="Start", blank=False)
@@ -22,6 +39,7 @@ class Wedstrijd(models.Model):
     titel = models.CharField(max_length=150)
     slug = models.SlugField()
     deelnemers = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    wedstrijd_type = models.ForeignKey(WedstrijdType)
 
     def __str__(self):
         return self.titel
