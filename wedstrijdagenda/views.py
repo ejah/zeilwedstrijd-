@@ -13,7 +13,7 @@ from schedule.models import Calendar, Event
 from datetime import datetime
 
 from wedstrijdagenda.forms import CreateWedstrijdForm
-from wedstrijdagenda.models import Wedstrijd
+from wedstrijdagenda.models import Wedstrijd, WedstrijdType
 
 actief_filter = {}
 
@@ -25,7 +25,13 @@ def homepage(request):
     #     event = Event(**data)
     #     event.save()
     #     cal.events.add(event)
-    return render_to_response("home.html", RequestContext(request=request))
+    # Voeg de filtervelden toe aan de context
+    wedstrijd_type_list = {}
+    for field in WedstrijdType._meta.get_fields():
+        if field.get_internal_type() in ["BooleanField"]:
+            wedstrijd_type_list[field.name] = field.verbose_name
+
+    return render_to_response("home.html", RequestContext(request, {'filter':wedstrijd_type_list}))
 
 
 def api_wedstrijden(request):

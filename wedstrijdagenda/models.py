@@ -18,6 +18,8 @@ class WedstrijdType(models.Model):
     inshore = models.BooleanField(verbose_name="Inshore", default=False)
     nearshore = models.BooleanField(verbose_name="Near shore", default=False)
     offshore = models.BooleanField(verbose_name="Offshore", default=False)
+    other_type = models.BooleanField(verbose_name="Other type", default=False)
+    other_type_name = models.CharField(max_length=20)
 
     def __str__(self):
         name_list = [];
@@ -25,7 +27,10 @@ class WedstrijdType(models.Model):
         for field in fieldlist:
             if field.get_internal_type() in ["BooleanField"]:
                 if getattr(self, field.name):
-                    name_list.append(field.verbose_name)
+                    if field.name == 'other_type':
+                        name_list.append(self.other_type_name)
+                    else:
+                        name_list.append(field.verbose_name)
         return " ".join(name_list)
 
     class Meta:

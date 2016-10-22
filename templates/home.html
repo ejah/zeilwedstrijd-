@@ -20,12 +20,21 @@
         {% endif %}
     </div>
     <div>
-    <h1>Filter</h1>
+        <h1>Filter</h1>
         <h2>Type wedstrijd</h2>
-        <h2>Handicap</h2>
-    <form>
-        <input id="SW" type="checkbox" value="SW" onchange="update_filter(this)"><label for="SW">SW</label>
-    </form>
+        <form>
+            <ul id="filter">
+                {% for key, value in filter.items %}
+                    <div class="checkbox">
+                        <label>
+                            <input id="{{ key }}" type="checkbox" value="{{ key }}" checked="true"
+                                                        onchange="update_filter(this)">
+                            {{ value }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </ul>
+        </form>
     </div>
 {% endblock %}
 
