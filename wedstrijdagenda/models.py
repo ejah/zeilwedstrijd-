@@ -59,3 +59,11 @@ class Wedstrijd(models.Model):
 
     class Meta:
         verbose_name_plural = "Wedstrijden"
+
+    def is_filtered(self, filterlijst):
+        status = False
+        for filter_item in filterlijst:
+            if getattr(self, filter_item):
+                status = True
+                break
+        return status

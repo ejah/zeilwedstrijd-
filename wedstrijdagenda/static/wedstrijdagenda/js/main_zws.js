@@ -42,6 +42,7 @@ function update_filter(checkBox){
 
         success: function(json) {
             console.log("Filter values gepost");
+            $('#calendar').fullCalendar( 'refetchEvents' );
         },
 
         error: function (xhr, errmsg, err) {

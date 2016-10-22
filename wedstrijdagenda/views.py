@@ -37,15 +37,20 @@ def homepage(request):
 def api_wedstrijden(request):
     wedstrijden = Wedstrijd.objects.all()
     ws_lijst = []
+    filterlijst = []
+    for fname, fstatus in actief_filter.items():
+        if not fstatus:
+            filterlijst.append(fname)
     for wedstrijd in wedstrijden:
-        ws_lijst.append(
-            {"id": wedstrijd.pk,
-             "start": wedstrijd.start.isoformat(),
-             "end": wedstrijd.eind.isoformat(),
-             "title": wedstrijd.titel,
-             "beschrijving": wedstrijd.beschrijving,
-             "url": "zeilwedstrijd/%s/" % wedstrijd.slug,
-             })
+        if not wedstrijd.is_filtered(filterlijst):
+            ws_lijst.append(
+                {"id": wedstrijd.pk,
+                 "start": wedstrijd.start.isoformat(),
+                 "end": wedstrijd.eind.isoformat(),
+                 "title": wedstrijd.titel,
+                 "beschrijving": wedstrijd.beschrijving,
+                 "url": "zeilwedstrijd/%s/" % wedstrijd.slug,
+                 })
     return HttpResponse(json.dumps(ws_lijst), content_type="application/json")
 
 def api_filter_wedstrijden(request):
