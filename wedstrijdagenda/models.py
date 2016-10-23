@@ -63,7 +63,7 @@ class Wedstrijd(models.Model):
     def is_filtered(self, filterlijst):
         status = False
         for filter_item in filterlijst:
-            if getattr(self, filter_item):
+            if getattr(self.wedstrijd_type, filter_item):
                 status = True
                 break
         return status
