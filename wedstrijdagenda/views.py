@@ -31,7 +31,7 @@ def homepage(request):
         if field.get_internal_type() in ["BooleanField"]:
             wedstrijd_type_list[field.name] = field.verbose_name
 
-    return render_to_response("home.html", RequestContext(request, {'filter':wedstrijd_type_list}))
+    return render_to_response("home.html", {'filter':wedstrijd_type_list})
 
 
 def api_wedstrijden(request):
