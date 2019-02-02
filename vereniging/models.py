@@ -67,7 +67,7 @@ class Gebruiker(models.Model):
         (1, "Vereniging"),
     ]
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, models.SET_NULL, primary_key=True, blank=True, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, models.CASCADE, primary_key=True, blank=True)
     usertype = models.IntegerField(default=0, choices=USER_TYPES)
     vereniging = models.ForeignKey(ZeilVereniging, models.SET_NULL, blank=True, null=True)
 

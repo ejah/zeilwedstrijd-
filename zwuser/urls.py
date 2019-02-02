@@ -1,4 +1,6 @@
 # File urls created on: 10-05-16 by: ejah
+app_name = 'zwuser'
+
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm

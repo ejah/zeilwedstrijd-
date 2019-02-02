@@ -44,8 +44,12 @@ INSTALLED_APPS = [
     'vereniging.apps.VerenigingConfig',
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
-    'user',
+    'zwuser',
     'schedule',
+]
+
+MIDDLEWARE =[
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 MIDDLEWARE_CLASSES = [

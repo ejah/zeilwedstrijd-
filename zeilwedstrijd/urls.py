@@ -20,7 +20,7 @@ from vereniging.urls import v_urls
 from wedstrijdagenda import views
 from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven, WedstrijdCreateView, \
     api_filter_wedstrijden
-from user import urls as user_urls
+
 
 
 urlpatterns = [
@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^verenigingen/', include(v_urls)),
     url(r'^$', views.homepage, name="home"),
 
-    url(r'^user/', include(user_urls, app_name='user', namespace='ej-user')),
+    url(r'^user/', include(('zwuser.urls', 'zwuser'), namespace='ej-user')),
 
     url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
     url(r'^api/filter', api_filter_wedstrijden, name="filter_wedstrijden"),
