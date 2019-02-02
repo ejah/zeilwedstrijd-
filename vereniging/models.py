@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from localflavor.generic.countries import iso_3166
@@ -23,10 +23,10 @@ class Adres(models.Model):
         verbose_name="Adres"
 
 class VerenigingsAdres(Adres):
-    vereniging = models.ForeignKey("ZeilVereniging")
+    vereniging = models.ForeignKey("ZeilVereniging", models.CASCADE, blank=True, null=True)
 
 class GebruikersAdres(Adres):
-    gebruiker = models.ForeignKey("Gebruiker")
+    gebruiker = models.ForeignKey("Gebruiker", models.CASCADE, blank=True, null=True)
 
 
 class ZeilVereniging(models.Model):
@@ -67,9 +67,9 @@ class Gebruiker(models.Model):
         (1, "Vereniging"),
     ]
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, models.SET_NULL, primary_key=True, blank=True, null=True)
     usertype = models.IntegerField(default=0, choices=USER_TYPES)
-    vereniging = models.ForeignKey(ZeilVereniging, null=True)
+    vereniging = models.ForeignKey(ZeilVereniging, models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return " ".format(self.user.last_name, self.user.first_name)
