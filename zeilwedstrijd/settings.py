@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
     #'zwuser.apps.ZWUserConfig',
+    'bootstrap3',
+    'bootstrap_datepicker_plus',
     'bootstrapform',
     # 'allauth_bootstrap',
     'allauth',
@@ -156,14 +158,14 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 )
 
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
-
-BOWER_INSTALLED_APPS = (
-    'jquery',
-    'bootstrap',
-    'fullcalendar',
-    'eonasdan-bootstrap-datetimepicker',
-)
+# BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
+#
+# BOWER_INSTALLED_APPS = (
+#     'jquery',
+#     'bootstrap',
+#     'fullcalendar',
+#     'eonasdan-bootstrap-datetimepicker',
+# )
 
 LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")

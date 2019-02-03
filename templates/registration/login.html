@@ -17,7 +17,7 @@
     {% endif %}
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="form-group col-md-6">
         <form action="{{ app_path }}" method="post" id="login-form" role="form">{% csrf_token %}
             {{ form|bootstrap }}
