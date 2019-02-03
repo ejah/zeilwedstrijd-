@@ -1,5 +1,5 @@
 {% load bootstrap %}
-<form class="form-horizontal" action="{% url "ej-user:login" %}" method="post">
+<form class="form-horizontal" action="{% url "login" %}" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
     {% if next %}

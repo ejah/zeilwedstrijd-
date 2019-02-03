@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load staticfiles %}
+{% load account %}
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -43,7 +44,7 @@
             {% endblock %}
         </div>
         <main class="col-md-8">
-            {% block body %}
+            {% block content %}
             {% endblock %}
         </main>
         <div class="col-md-2">

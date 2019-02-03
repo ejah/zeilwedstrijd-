@@ -10,7 +10,7 @@
     <p>Wilt u uw account uitschakelen?</p>
     <p>Dit kan niet ongedaan worden gemaakt!</p>
     </div>
-    <form action="{% url "ej-user:disable" %}" method="post">
+    <form action="{% url "disable" %}" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
     <button type="submit" class="btn btn-default">Uitschakelen</button>

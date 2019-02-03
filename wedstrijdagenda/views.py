@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.urls import reverse
 
 # Create your views here.
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from django.views.generic import DetailView, CreateView
 from schedule.models import Calendar, Event
 from datetime import datetime
@@ -30,8 +30,11 @@ def homepage(request):
     for field in WedstrijdType._meta.get_fields():
         if field.get_internal_type() in ["BooleanField"]:
             wedstrijd_type_list[field.name] = field.verbose_name
-
-    return render_to_response("home.html", {'filter':wedstrijd_type_list})
+    template = loader.get_template('calendar_base.html')
+    context = {
+        'filter':wedstrijd_type_list,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def api_wedstrijden(request):

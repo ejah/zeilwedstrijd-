@@ -39,13 +39,13 @@ class DisableAccount(View):
 
 
 class CreateAccount(MailContextViewMixin, View):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('ej-user:create_done')
+    form = UserCreationForm
+    success_url = reverse_lazy('create_done')
     template_name = 'user/user_create.html'
 
     @method_decorator(csrf_protect)
     def get(self, request):
-        return TemplateResponse(request, self.template_name, {'form': self.form_class})
+        return TemplateResponse(request, self.template_name, {'form': self.form()})
 
     @method_decorator(csrf_protect)
     @method_decorator(sensitive_post_parameters('password1', 'password2'))
@@ -59,12 +59,12 @@ class CreateAccount(MailContextViewMixin, View):
                 errs = (bound_form.non_field_errors())
                 for err in errs:
                     error(request, err)
-                return redirect("ej-user:resend_activation")
+                return redirect("resend_activation")
         return TemplateResponse(request, self.template_name, {'form': bound_form})
 
 
 class ActivateAccount(View):
-    success_url = reverse_lazy('ej-user:login')
+    success_url = reverse_lazy('login')
     template_name = 'user/user_activate.html'
 
     @method_decorator(never_cache)
@@ -87,7 +87,7 @@ class ActivateAccount(View):
 
 class ResendActivationEmail(MailContextViewMixin, View):
     form_class = ResendActivationEmailForm
-    succes_url = reverse_lazy("ej-user:login")
+    succes_url = reverse_lazy("login")
     template_name = 'user/resend_activation.html'
 
     @method_decorator(csrf_protect)

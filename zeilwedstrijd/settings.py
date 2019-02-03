@@ -38,29 +38,36 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'bootstrapform',
     'vereniging.apps.VerenigingConfig',
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
-    'zwuser',
+    #'zwuser.apps.ZWUserConfig',
+    'bootstrapform',
+    # 'allauth_bootstrap',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # allauth providers
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.linkedin',
+
     'schedule',
 ]
 
 MIDDLEWARE =[
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
-
-MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'zeilwedstrijd.urls'
@@ -95,6 +102,13 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -151,9 +165,9 @@ BOWER_INSTALLED_APPS = (
     'eonasdan-bootstrap-datetimepicker',
 )
 
-LOGIN_URL = reverse_lazy("ej-user:login")
+LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
-LOGOUT_URL = reverse_lazy("ej-user:logout")
+LOGOUT_URL = reverse_lazy("logout")
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -163,3 +177,7 @@ EMAIL_SUBJECT_PREFIX = "(Zeilwedstrijden) - "
 MANAGERS = (
     ('Ikke', 'ej.huijbers@gmail.com'),
 )
+
+SITE_ID = 1
+
+INTERNAL_IPS = ('127.0.0.1',)

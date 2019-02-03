@@ -9,7 +9,7 @@
     <div class="col-md-4">
     <p>Activeringsemail opnieuw versturen.</p>
     </div>
-    <form action="{% url "ej-user:resend_activation" %}" method="post">
+    <form action="{% url "resend_activation" %}" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
     <button type="submit" class="btn btn-default">Opnieuw versturen</button>

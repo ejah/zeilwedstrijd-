@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
 
 from vereniging.urls import v_urls
@@ -21,14 +22,14 @@ from wedstrijdagenda import views
 from wedstrijdagenda.views import api_wedstrijden, WedstrijdDetailView, inschrijven, uitschrijven, WedstrijdCreateView, \
     api_filter_wedstrijden
 
-
+from .settings import DEBUG
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     url(r'^verenigingen/', include(v_urls)),
     url(r'^$', views.homepage, name="home"),
-
-    url(r'^user/', include(('zwuser.urls', 'zwuser'), namespace='ej-user')),
+    url(r'^user/', include('allauth.urls')),
+    # url(r'^user/', include(('zwuser.urls', 'zwuser'), namespace='ej-user')),
 
     url(r'^api/wedstrijden', api_wedstrijden, name="wedstrijden"),
     url(r'^api/filter', api_filter_wedstrijden, name="filter_wedstrijden"),
@@ -39,3 +40,10 @@ urlpatterns = [
     url(r'^zeilwedstrijd/(?P<slug>[a-zA-Z0-9\-]+)/uitschrijven', uitschrijven, name="uitschrijven"),
 
 ]
+
+if DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

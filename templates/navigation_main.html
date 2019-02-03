@@ -1,3 +1,5 @@
+{% load account %}
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,12 +49,12 @@
                        aria-expanded="false">Account<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         {% if user.is_authenticated %}
-                            <li><a href="{% url "ej-user:pw_change" %}">Wachtwoord wijzigen</a></li>
+                            <li><a href="{% url "account_change_password" %}">Wachtwoord wijzigen</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{% url "ej-user:logout" %}?next={{ request.path }}">Uitloggen</a></li>
+                            <li><a href="{% url "account_logout" %}?next={{ request.path }}">Uitloggen</a></li>
                         {% else %}
-                            <li><a href="{% url "ej-user:login" %}?next={{ request.path }}">Inloggen</a></li>
-                            <li><a href="{% url 'ej-user:create' %}">Aanmaken</a></li>
+                            <li><a href="{% url "account_login" %}?next={{ request.path }}">Inloggen</a></li>
+                            <li><a href="{% url 'account_signup' %}">Aanmaken</a></li>
                         {% endif %}
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>

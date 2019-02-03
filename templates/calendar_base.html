@@ -1,5 +1,7 @@
-{% extends "site_base.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
+{% load account %}
+
 {% block extra_head %}
     <link rel='stylesheet' type='text/css'
           href="{% static "fullcalendar/dist/fullcalendar.css" %}" xmlns="http://www.w3.org/1999/html"/>
@@ -13,9 +15,9 @@
 {% block sidebar %}
     <div>
         {% if user.is_authenticated %}
-            {% if user.gebruiker.usertype == 1 %}
+{#            {% if user.type == 1 %}#}
                 <h1>Menu</h1>
-            {% endif %}
+{#            {% endif %}#}
             <p>hoi</p>
         {% endif %}
     </div>
@@ -38,7 +40,7 @@
     </div>
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <div id="calendar">
 
     </div>
