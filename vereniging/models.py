@@ -72,5 +72,5 @@ class Gebruiker(models.Model):
     vereniging = models.ForeignKey(ZeilVereniging, models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return " ".format(self.user.last_name, self.user.first_name)
+        return " ".format(self.user.name, self.user.first_name)
 

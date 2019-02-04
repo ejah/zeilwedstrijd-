@@ -19,11 +19,11 @@ admin.site.register(VerenigingsAdres, AdresAdmin)
 class UserProfileInline(admin.StackedInline):
     model = Gebruiker
 
-class UserAdmin(UserAdmin):
-    inlines = [UserProfileInline]
+# class UserAdmin(UserAdmin):
+#     inlines = [UserProfileInline]
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+# admin.site.unregister(User)
+# admin.site.register(User, UserAdmin)
 
 
 class ZVAdmin(ModelAdmin):

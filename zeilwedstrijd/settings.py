@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'vereniging.apps.VerenigingConfig',
     'wedstrijdagenda.apps.WedstrijdagendaConfig',
     'djangobower',
-    #'zwuser.apps.ZWUserConfig',
+    'zw_user.apps.ZwUserConfig',
     'bootstrap3',
     'bootstrap_datepicker_plus',
     'bootstrapform',
@@ -174,3 +174,6 @@ MANAGERS = (
 SITE_ID = 1
 
 INTERNAL_IPS = ('127.0.0.1',)
+
+# Authentication and user models
+AUTH_USER_MODEL='zw_user.ZW_User'

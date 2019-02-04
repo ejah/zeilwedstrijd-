@@ -6,6 +6,8 @@
     <link rel='stylesheet' type='text/css'
           href="{% static "fullcalendar/dist/fullcalendar.css" %}" xmlns="http://www.w3.org/1999/html"/>
     <script type="text/javascript" src="{% static "moment/min/moment.min.js" %}"></script>
+    <script src="{% static "moment/locale/nl.js" %}"></script>
+
     <script type='text/javascript'
             src="{% static "fullcalendar/dist/fullcalendar.js" %}"></script>
     <script type='text/javascript' src="{% static "fullcalendar/dist/locale/nl.js" %}"></script>
@@ -15,9 +17,9 @@
 {% block sidebar %}
     <div>
         {% if user.is_authenticated %}
-{#            {% if user.type == 1 %}#}
-                <h1>Menu</h1>
-{#            {% endif %}#}
+            {#            {% if user.type == 1 %}#}
+            <h1>Menu</h1>
+            {#            {% endif %}#}
             <p>hoi</p>
         {% endif %}
     </div>
@@ -30,7 +32,7 @@
                     <div class="checkbox">
                         <label>
                             <input id="{{ key }}" type="checkbox" value="{{ key }}" checked="true"
-                                                        onchange="update_filter(this)">
+                                   onchange="update_filter(this)">
                             {{ value }}
                         </label>
                     </div>
@@ -51,7 +53,7 @@
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
-                title: 'Dit is een titel',
+                title: 'Zeilwedstrijden agenda',
                 header: {
                     left: 'month basicWeek basicDay',
                     center: 'title',
