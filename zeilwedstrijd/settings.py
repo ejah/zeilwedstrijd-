@@ -155,17 +155,8 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'djangobower.finders.BowerFinder',
 )
-#
-# BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
-#
-# BOWER_INSTALLED_APPS = (
-#     'jquery',
-#     'bootstrap',
-#     'fullcalendar',
-#     'eonasdan-bootstrap-datetimepicker',
-# )
+
 
 LOGIN_URL = reverse_lazy("account_login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
