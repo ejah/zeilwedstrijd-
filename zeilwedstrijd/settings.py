@@ -155,9 +155,9 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
+    # 'djangobower.finders.BowerFinder',
 )
-
+#
 # BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
 #
 # BOWER_INSTALLED_APPS = (
@@ -167,9 +167,9 @@ STATICFILES_FINDERS = (
 #     'eonasdan-bootstrap-datetimepicker',
 # )
 
-LOGIN_URL = reverse_lazy("login")
+LOGIN_URL = reverse_lazy("account_login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
-LOGOUT_URL = reverse_lazy("logout")
+LOGOUT_URL = reverse_lazy("account_logout")
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

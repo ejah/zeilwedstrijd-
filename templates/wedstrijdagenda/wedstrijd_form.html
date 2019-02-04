@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-{% load bootstrap %}
+{#{% load bootstrap %}#}
 {% load bootstrap3 %}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
 
 {% block extra_head %}
 {{ form.media }}
@@ -10,22 +8,11 @@
     <form method="post" role="form">
         <legend>Nieuwe wedstrijd</legend>
         {% csrf_token %}
-        {{ form|bootstrap }}
+        {% bootstrap_form form %}
         <div class="form-group">
             <button type="submit" class="btn btn-default">Aanmaken</button>
         </div>
         </table>
     </form>
-{#    <script type="text/javascript">#}
-{#            $(function () {#}
-{#                $('#id_start').datetimepicker();#}
-{#            });#}
-{##}
-{#        </script>#}
-{#    <script type="text/javascript">#}
-{#            $(function () {#}
-{#                $('#id_eind').datetimepicker();#}
-{#            });#}
-{##}
-{#        </script>#}
+
 {% endblock %}
